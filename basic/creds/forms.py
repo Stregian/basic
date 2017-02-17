@@ -32,6 +32,16 @@ class SignupForm(forms.ModelForm):
     def clean(self):
         if self.cleaned_data['password2'] != self.cleaned_data['password1']:
             raise forms.ValidationError('Passwords must match')
+        
+        try:
+            user = User.objects.get(email=email1)
+        except:
+            user = None
+
+        if user:
+
+
+
         return self.cleaned_data
 
     def clean(self):
@@ -40,12 +50,10 @@ class SignupForm(forms.ModelForm):
         return self.cleaned_data
 
     def clean_email2(self):
-        # here
         if User.objects.get(email=email1):
           raise forms.ValidationError('This email address is already in use')
 
     def clean_username(self):
-        # here
         if User.objects.get(username=username):
           raise forms.ValidationError('This username is already taken')
 
