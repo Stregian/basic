@@ -7,6 +7,16 @@ class LoginForm(forms.Form):
 	password = forms.CharField(widget=forms.PasswordInput)
 
 
+class PasswordChangeForm(forms.Form):
+	current_password = forms.CharField(widget=forms.PasswordInput)
+	password1 = forms.CharField(widget=forms.PasswordInput)
+	password2 = forms.CharField(widget=forms.PasswordInput)
+
+
+class PasswordResetStart(forms.Form):
+	email = forms.EmailField()
+
+
 class SignupForm(forms.ModelForm):
 	username = forms.CharField(max_length=255)
 	email1 = forms.EmailField()
@@ -17,3 +27,4 @@ class SignupForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ['username', 'email1', 'email2', 'password1', 'password2']
+

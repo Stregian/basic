@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from forms import LoginForm, SignupForm
+from forms import LoginForm, SignupForm, PasswordChangeForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.http import HttpResponseRedirect, HttpResponse, Http404
@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 
-# renders a form, which if correct and complete, sends the user to a logged in page. 
 def login(request):
 
 	if request.method=='POST':
@@ -20,7 +19,7 @@ def login(request):
 
 			if user is not None:
 				auth_login(request,user)
-				return HttpResponseRedirect(reverse('logged_in'))
+				return HttpResponseRedirect(reverse('profile'))
 
 	else:
 		form = LoginForm()
@@ -28,24 +27,52 @@ def login(request):
 	return render(request, 'login_form.html', {'form':form} )
 
 
-def logged_in(request):
 
-	return render(request, 'logged_in.html')
-
-
-# renders a form, which if valid, registers a user to the site 
 def signup(request):
 
 	if request.method=='POST':
 		form = SignupForm(request.POST)
 
 		if form.is_valid():
-			email_check = False
+			pass
 			
-			if 
-
-
 	else:
 		form = SignupForm()
 		
 	return render(request, 'signup_form.html', {'form':form} )
+
+
+def password_change(request):
+
+	if request.method == "POST":
+		form = PasswordChangeForm(request.POST)	
+
+		if form.is_valid():
+			current_password = request.POST['current_password']
+			username = request.user.username
+			user = authenticate(username=username,password=current_password)
+
+			if user is not None:
+
+				if request.POST['password1'] == request.POST['password2']:
+					user.set_password(request.POST['password1'])
+					user.save()
+				else:
+					# error message for non-matching passwords
+					pass
+
+			else:
+				# error message for wrong password? 
+				pass
+
+	else:
+		form = PasswordChangeForm()
+
+	return render(request, 'password_change_form.html', {'form':form})
+
+
+def logged_in(request):
+	return render(request, 'logged_in.html')
+
+def profile(request):
+	return render(request, 'profile.html')
