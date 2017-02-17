@@ -1,12 +1,8 @@
-{% extends "form_base.html" %}
+{% extends "base.html" %}
 
-{% block form_content %}
-
-<form action="{% url 'signup'%}" method="post">
-	{% csrf_token %}
+{% block content %}
+{% include "form_header.html" %}
 	{{ form.as_p}}
-	<button type="submit">Submit</button>
-</form>
-
-{% endblock form_content %}
+{% include "form_footer.html" %}
+{% endblock content %}
 
