@@ -2,5 +2,7 @@
 
 {% block content %}
 {{ message }}<br/>
+{% if url %}
 <a href="{{url}}">Click here</a>
+{% endif %}
 {% endblock content %}

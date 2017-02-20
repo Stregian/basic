@@ -28,11 +28,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Email capabilities
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dontreply@dfmx.co.uk'
 EMAIL_HOST_PASSWORD = 'Thirteen13--'
+DEFAULT_FROM_EMAIL = 'dontreply@dfmx.co.uk'
 
 # Application definition
 
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'grappelli',
+    'captcha',
 
     'creds',
 ]
